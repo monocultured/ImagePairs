@@ -37,7 +37,7 @@ class ImageSwapper(QWidget):
         self.initUI()
     
     def initUI(self):
-        self.setWindowTitle('Image Swapper')
+        self.setWindowTitle('Image Pairs')
         
         # Set window size to half the display height
         screen_geometry = QApplication.desktop().screenGeometry()
