@@ -8,3 +8,12 @@ I wrote up the original problem on Metafilter: https://ask.metafilter.com/331637
 Link to my meandering attempts are here: https://www.perplexity.ai/search/Id-like-a-BvXu1UvvSmWn07RKxPX2XA
 
 I take no responsibility for this working for you in any shape or form.
+
+Keyboard shortcuts:
+
+j = swap out left image
+l = swap out right image
+k = swap both images
+s = save image combination as image file on desktop, named as "file1_file2"
+
+Don't forget to swap out folder_path = 'images/' to your own image directory
