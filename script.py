@@ -37,41 +37,27 @@ class ImageSwapper(QWidget):
         self.initUI()
     
     def initUI(self):
-        self.setWindowTitle('Image Pairs')
-        
-        # Set window size to half the display height
+        self.setWindowTitle('Image Swapper')
         screen_geometry = QApplication.desktop().screenGeometry()
         window_height = screen_geometry.height() // 2
         self.setFixedSize(screen_geometry.width() // 2, window_height)
-        
         self.mainLayout = QVBoxLayout()
         self.imageLayout = QHBoxLayout()
-        
         self.imageLabel1 = ImageLabel(self)
         self.imageLabel2 = ImageLabel(self)
         self.imageLayout.addWidget(self.imageLabel1)
         self.imageLayout.addWidget(self.imageLabel2)
-        
-        self.controlLayout = QHBoxLayout()
         self.btnColor = QPushButton('Change Background Color', self)
         self.btnColor.clicked.connect(self.changeBackgroundColor)
-        self.btnAdjust = QPushButton('Adjust Images', self)
-        self.btnAdjust.clicked.connect(lambda: self.updateImages(force_update=True))
-        self.controlLayout.addWidget(self.btnColor)
-        self.controlLayout.addWidget(self.btnAdjust)
-        
         self.mainLayout.addLayout(self.imageLayout)
-        self.mainLayout.addLayout(self.controlLayout)
-        
+        self.mainLayout.addWidget(self.btnColor, alignment=Qt.AlignCenter)
         self.setLayout(self.mainLayout)
-        
-        self.updateImages(force_update=True)
+        self.updateImages()
     
-    def updateImages(self, force_update=False):
+    def updateImages(self):
         padding = 10
         target_width = (self.size().width() - (3 * padding)) // 2
-        target_height = self.size().height() - padding - self.controlLayout.sizeHint().height()
-        
+        target_height = self.size().height() - padding - self.btnColor.sizeHint().height()
         for img_path, label in zip(self.current_images, [self.imageLabel1, self.imageLabel2]):
             image = resize_image(img_path, target_width, target_height)
             q_image = ImageQt.ImageQt(image)
@@ -84,18 +70,18 @@ class ImageSwapper(QWidget):
             self.current_images[0] = new_img
         else:
             self.current_images[1] = new_img
-        self.updateImages(force_update=True)
+        self.updateImages()
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_J:
             self.current_images[0] = random.choice(self.image_paths)
-            self.updateImages(force_update=True)
+            self.updateImages()
         elif event.key() == Qt.Key_K:
             self.current_images = random.sample(self.image_paths, 2)
-            self.updateImages(force_update=True)
+            self.updateImages()
         elif event.key() == Qt.Key_L:
             self.current_images[1] = random.choice(self.image_paths)
-            self.updateImages(force_update=True)
+            self.updateImages()
         elif event.key() == Qt.Key_S:
             self.saveCombination()
 
